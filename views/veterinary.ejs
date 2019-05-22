@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <!--=============== basic  ===============-->
+        <meta charset="UTF-8">
+        <title>Citybook -Directory Listing Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="robots" content="index, follow"/>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <!--=============== css  ===============-->
+        <link type="text/css" rel="stylesheet" href="/public/directoryTheme/assets/css/reset.css">
+        <link type="text/css" rel="stylesheet" href="/public/directoryTheme/assets/css/plugins.css">
+        <link type="text/css" rel="stylesheet" href="/public/directoryTheme/assets/css/style.css">
+        <link type="text/css" rel="stylesheet" href="/public/directoryTheme/assets/css/color.css">
+        <!--=============== favicons ===============-->
+        <link rel="shortcut icon" href="images/favicon.ico">
+
+        <link type="text/css" rel="stylesheet" href="/public/directoryTheme/assets/css/pages/veterinary.css">
+    </head>
+    <body>
+        <!--loader-->
+        <div class="loader-wrap">
+            <div class="pin"></div>
+            <div class="pulse"></div>
+        </div>
+        <!--loader end-->
+        <!-- Main  -->
+        <div id="main">
+            <!-- header-->
+            <% include commons/header.ejs %>
+
+            <!-- wrapper -->	
+            <div id="wrapper">
+                <div class="content">
+                    <div class="centro_detalle">
+                        <h3 class="cd_nombre" id="vg_name"><%= veterinary.get("name") %></h3>
+                        <div class="cd_direccion" id="vg_address"><%= veterinary.get("address") + ", " + veterinary.get("cp") + ", " + veterinary.get("city") %></div>
+                        <div class="row">
+                            <div class="col-sm-7 col-md-8 col-lg-8 vg_main_column">
+                                <div class="cd_slide">
+                                    <div class="slider" id="vg_slider">
+                                    </div>
+                                </div>
+                                <div id="mainMapContainer">
+                                    <div id="mainMap"></div>
+                                </div>
+                                <h5 class="cd_tit vet_exclusive allowed_pets_title">Mascotas Admitidas</h5>
+                                <div class="row vet_exclusive" id="vg_allowed_pets"></div>
+                                <h5 class="cd_tit description_title">Descripción</h5>
+                                <div class="cd_descripcion" id="vg_description"></div>
+                                <h5 class="cd_tit vet_exclusive categories_title">Especialidades</h5>
+                                <div class="row vet_exclusive" id="vg_categories"></div>
+                                <h5 class="cd_tit cd_tit_grey">Opiniones</h5>
+                                <div class="cd_rating">
+                                    <p class="cd_rating_valor" id="vg_rating_value" data-plugin="rating"></p>
+                                    <div class="titulo">Puntuación del establecimiento</div>
+                                    <span class="star-rating ">
+                                       <div class="rating" id="vg_rating_stars"></div>
+                                    </span>
+                                    <p class="cd_rating_ops" id="vg_opinions_number"></p>
+                                </div>
+                                <div class="cd_comentarios mx-20">
+                                    <div class="comment media">
+                                        <div class="pr-20">
+                                            <a class="avatar avatar-lg" href="javascript:void(0)">
+                                                <img src="../../global/portraits/5.jpg" alt="...">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="comment-body">
+                                                <a class="comment-author" href="javascript:void(0)">Edward Fletcher</a>
+                                                <div class="comment-meta">
+                                                    <span class="date">Yesterday at 12:30AM</span>
+                                                </div>
+                                                <div class="comment-content">
+                                                    <p>eniam ipsum pariatur anim labore sunt duis officia labore.
+                                                        Occaecat sunt ipsum eu ad nostrud do in. Ea aliqua officia
+                                                        magna laborum quis proident. Irure ullamco aliquip esse ipsum.
+                                                        Exercitation enim dolore commodo mollit non laboris et velit
+                                                        adipisicing. Nulla labore sint aliqua minim ad qui. Minim
+                                                        sint aliqua magna anim duis laborum quis officia. Veniam
+                                                        nostrud aliqua in anim. Pariatur elit ad ea incididunt aliquip.
+                                                        Mollit Lorem in magna magna irure commodo do est ullamco.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="comment media">
+                                        <div class="pr-20">
+                                            <a class="avatar avatar-lg" href="javascript:void(0)">
+                                                <img src="../../global/portraits/7.jpg" alt="...">
+                                            </a>
+                                        </div>
+                                        <div class="comment-body media-body">
+                                            <a class="comment-author" href="javascript:void(0)">Nathan Watts</a>
+                                            <div class="comment-meta">
+                                                <span class="date">5 days ago</span>
+                                            </div>
+                                            <div class="comment-content">
+                                                <p>Dude, this is awesome. Thanks so much</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment media">
+                                        <div class="pr-20">
+                                            <a class="avatar avatar-lg" href="javascript:void(0)">
+                                                <img src="../../global/portraits/8.jpg" alt="...">
+                                            </a>
+                                        </div>
+                                        <div class="comment-body media-body">
+                                            <a class="comment-author" href="javascript:void(0)">Heather Harper</a>
+                                            <div class="comment-meta">
+                                                <span class="date">5 days ago</span>
+                                            </div>
+                                            <div class="comment-content">
+                                                <p>Lorem ipsum Ullamco fugiat esse culpa consequat velit veniam
+                                                    incididunt incididunt nostrud labore nostrud sit dolore in
+                                                    nulla sit non laborum.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form class="comments-add mt-35" action="#" method="post">
+                                        <h3 class="mb-35">Leave A Reply</h3>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="name" placeholder="Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" name="email" placeholder="Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="email" placeholder="Web site">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control" rows="5" placeholder="Comment here"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary waves-effect waves-classic">Comment</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-4 col-lg-4 vg_right_column">
+                                <div id="right_column_container">
+                                    <div class="right_column_box rating_box cd_rating">
+                                         <p id="lateral_rating_value" class="cd_rating_valor">4.5</p>
+                                         <div class="titulo">Puntuación del establecimiento</div>
+                                         <span class="star-rating">
+                                           <div class="rating" id="lateral_rating_stars"></div>
+                                         </span>
+                                         <p id="lateral_opinions_number" class="cd_rating_ops">Basado en 10 opiniones</p>
+                                    </div>
+                                    <div class="right_column_box">
+                                        <div class="cd_cd_mapa">
+                                            <div class="vg_googleMap_container">
+                                                <div id="vg_googleMap"></div>
+                                            </div>
+                                            <div id="vg_box_address" class="vg_box_direccion"></div>
+                                            <div id="vg_box_city_and_cp" class="vg_box_direccion"></div>
+                                        </div>
+                                    </div>
+                                    <div class="right_column_box vg_contact_info">
+                                        <div class="titulo">Contacto</div>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <th>Teléfono</th>
+                                                <td id="vetPhone" >Sin definir</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Teléfono 24H</th>
+                                                <td id="vetUrgencyPhone" >Sin definir</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td id="vetEmail" >Sin definir</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Web</th>
+                                                <td id="vetWeb" >Sin definir</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="right_column_box vg_horarios">
+                                        <div class="titulo">Horario de apertura</div>
+                                        <table id="scheduleTable">
+                                            <tbody>
+                                            <tr>
+                                                <th>Lunes</th>
+                                                <td id="vg_horario_lunes" >Sin definir</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Martes</th>
+                                                <td id="vg_horario_martes" >Sin definir</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Miércoles</th>
+                                                <td id="vg_horario_miercoles" >Sin definir</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Jueves</th>
+                                                <td id="vg_horario_jueves" >Sin definir</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Viernes</th>
+                                                <td id="vg_horario_viernes" >Sin definir</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Sábado</th>
+                                                <td id="vg_horario_sabado" >Sin definir</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Domingo</th>
+                                                <td id="vg_horario_domingo" >Sin definir</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button id="bookButton">
+                                        ¡Pide cita!
+                                    </button>
+                                    <button id="suggestChangesButton">
+                                        <i class="fa fa-edit"></i>
+                                        Sugerir cambios
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer -->
+            <% include commons/footer.ejs %>
+        </div>
+        <!-- Main end -->
+
+        <!-- Dialogs -->
+        <% include dialogs/newSuggestDialog.ejs %>
+
+        <!--=============== scripts  ===============-->
+        <% include commons/body-global.ejs %>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHWF4S03V4kODAXed5C81Ka5j25u5Wu-4"></script>
+        <script type="text/javascript" src="/public/directoryTheme/assets/vendor/raty/jquery.raty.js"></script>
+
+        <script type="text/javascript" src="/public/directoryTheme/assets/js/pages/veterinary.js"></script>
+        <script type="text/javascript" src="/public/directoryTheme/assets/js/pages/dialogs/newSuggestDialog.js"></script>
+
+        <!-- Local Variables -->
+        <script type="text/javascript">
+            const veterinary = <%- JSON.stringify(veterinary) %>;
+        </script>
+    </body>
+</html>

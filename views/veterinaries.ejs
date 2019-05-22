@@ -1,0 +1,229 @@
+
+<%
+    function getDistanceFromLatLonInMeters(lat1,lon1,lat2,lon2) {
+        var p = 0.017453292519943295;    // Math.PI / 180
+        var c = Math.cos;
+        var a = 0.5 - c((lat2 - lat1) * p)/2 +
+                c(lat1 * p) * c(lat2 * p) *
+                (1 - c((lon2 - lon1) * p))/2;
+
+        return 12742 * Math.asin(Math.sqrt(a)) * 1000; // 2 * R; R = 6371 km ; *1000 to meters
+    }
+%>
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <!--=============== basic  ===============-->
+        <meta charset="UTF-8">
+        <title>Citybook -Directory Listing Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="robots" content="index, follow"/>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <!--=============== css  ===============-->	
+        <link type="text/css" rel="stylesheet" href="/public/directoryTheme/assets/css/reset.css">
+        <link type="text/css" rel="stylesheet" href="/public/directoryTheme/assets/css/plugins.css">
+        <link type="text/css" rel="stylesheet" href="/public/directoryTheme/assets/css/style.css">
+        <link type="text/css" rel="stylesheet" href="/public/directoryTheme/assets/css/color.css">
+        <!--=============== favicons ===============-->
+        <link rel="shortcut icon" href="images/favicon.ico">
+
+        <link type="text/css" rel="stylesheet" href="/public/directoryTheme/assets/css/pages/veterinaries.css">
+    </head>
+    <body>
+        <!--loader-->
+        <div class="loader-wrap">
+            <div class="pin"></div>
+            <div class="pulse"></div>
+        </div>
+        <!--loader end-->
+        <!-- Main  -->
+        <div id="main">
+            <!-- header-->
+            <% include commons/header.ejs %>
+
+            <!-- wrapper -->	
+            <div id="wrapper">
+                <div class="content">
+                    <!-- Map -->
+                    <div class="map-container column-map right-pos-map">
+                        <div id="map-main"></div>
+                    </div>
+                    <!-- Map end -->          
+                    <!--col-list-wrap -->   
+                    <div class="col-list-wrap left-list">
+                        <div class="listsearch-options fl-wrap" id="lisfw" >
+                            <div class="container">
+                                <div class="listsearch-header fl-wrap">
+                                    <h3>Veterinarias en <span><%= searchPlace %></span></h3>
+                                </div>
+                                <!-- listsearch-input-wrap  -->  
+                                <div class="listsearch-input-wrap fl-wrap">
+                                    <!-- TODO Permitir filtros de categorías, etc... -->
+                                    <!-- <div class="listsearch-input-item">
+                                       <i class="mbri-key single-i"></i>
+                                       <input type="text" placeholder="Keywords?" value=""/>
+                                   </div>
+                                   <div class="listsearch-input-item">
+                                       <select data-placeholder="Location" class="chosen-select" >
+                                           <option>All Locations</option>
+                                           <option>Bronx</option>
+                                           <option>Brooklyn</option>
+                                           <option>Manhattan</option>
+                                           <option>Queens</option>
+                                           <option>Staten Island</option>
+                                       </select>
+                                   </div>
+                                   <div class="listsearch-input-item">
+                                       <select data-placeholder="All Categories" class="chosen-select" >
+                                           <option>All Categories</option>
+                                           <option>Shops</option>
+                                           <option>Hotels</option>
+                                           <option>Restaurants</option>
+                                           <option>Fitness</option>
+                                           <option>Events</option>
+                                       </select>
+                                   </div>-->
+                                    <div class="listsearch-input-text" id="autocomplete-container">
+                                        <label><i class="mbri-map-pin"></i>Introduce dirección</label>
+                                        <input type="text" placeholder="Calle, Barrio o CP" id="autocomplete-input" class="qodef-archive-places-search" value=""/>
+                                        <a href="#" class="loc-act qodef-archive-current-location"><i class="fa fa-dot-circle-o"></i></a>
+                                    </div>
+                                    <!-- hidden-listing-filter -->
+                                    <div class="hidden-listing-filter fl-wrap">
+                                        <div class="distance-input fl-wrap">
+                                            <div class="distance-title"> Distancia máxima <span></span><span id="distanceType">km</span></div>
+                                            <div class="distance-radius-wrap fl-wrap">
+                                                <input class="distance-radius rangeslider--horizontal" type="range" min="1" max="100" step="1" value="10" data-title="Distancia máxima">
+                                            </div>
+                                        </div>
+                                        <!-- Checkboxes -->
+                                        <div class=" fl-wrap filter-tags">
+                                            <h4>Filtrar por:</h4>
+                                            <input id="check-aa" type="checkbox" name="check">
+                                            <label for="check-aa">Urgencias 24h</label>
+                                        </div>
+                                    </div>
+                                    <!-- hidden-listing-filter end -->
+                                    <button id="searchButton" class="button fs-map-btn">Buscar</button>
+                                    <div class="more-filter-option" style="display:none">Más Filtros <span></span></div>
+                                </div>
+                                <!-- listsearch-input-wrap end -->
+                            </div>
+                        </div>
+                        <!-- list-main-wrap-->
+                        <div class="list-main-wrap fl-wrap card-listing">
+                            <div class="container">
+                                <% if (veterinaries.length === 0) { %>
+                                    <p class="ml-20 mt-15">Lo sentimos, no hemos encontrado veterinarias para tu búsqueda</p>
+                                <% } %>
+                                <% veterinaries.forEach(function(veterinary) { %>
+                                    <!-- listing-item -->
+                                    <div class="listing-item list-layout">
+                                        <article class="geodir-category-listing fl-wrap">
+                                            <% if (veterinary.get("profileImage")) { %>
+                                                <div class="geodir-category-img">
+                                                    <img src="<%= veterinary.get('profileImage').url() %>" alt="">
+                                                    <div class="overlay"></div>
+                                                </div>
+                                            <% } else { %>
+                                                <div class="geodir-category-img mobile-no-photo">
+                                                    <img src="/public/directoryTheme/assets/images/all/vets_placeholder.jpg" alt="">
+                                                    <div class="overlay"></div>
+                                                </div>
+                                            <% } %>
+                                            <div class="geodir-category-content fl-wrap">
+                                                <h3><a href="/veterinaria/<%= veterinary.get("name").replace(/ /g, '-'); %>_<%= veterinary.id %>"><%= veterinary.get("name") %></a></h3>
+                                                <div class="geodir-category-location"><a  href="#2" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i><%= veterinary.get("address") + ", " + veterinary.get("cp") + ", " + veterinary.get("city") %></a></div>
+                                                <% let distanceInMeters = getDistanceFromLatLonInMeters(latitude, longitude, veterinary.get("geolocation").latitude, veterinary.get("geolocation").longitude); %>
+                                                <% if (distanceInMeters > 1000) { %>
+                                                    <p class="geodir-category-distance">a <%= (distanceInMeters/1000).toFixed(2) %> km</p>
+                                                <% } else { %>
+                                                    <p class="geodir-category-distance">a <%= distanceInMeters.toFixed(0) %> m</p>
+                                                <% } %>
+                                                <%  var trimmedDescription;
+                                                    if (veterinary.get("description")) {
+                                                        trimmedDescription = veterinary.get("description").length > 250 ?
+                                                                veterinary.get("description").substring(0, 250 - 3) + "..." : veterinary.get("description");
+                                                    } else {
+                                                        trimmedDescription = "";
+                                                    }
+                                                %>
+                                                <p class="geodir-category-description"><%- trimmedDescription %></p>
+                                                <div class="geodir-category-options fl-wrap">
+                                                    <%  let numberOfRates = veterinary.get("numberOfRates"); %>
+                                                    <%   if (numberOfRates > 0) { %>
+                                                        <div class="listing-rating card-popup-rainingvis">
+                                                            <% var rating = veterinary.get('averageRating'); %>
+                                                            <% for (var i=0; i<Math.trunc(veterinary.get('averageRating')); i++) { %>
+                                                                <i class="fa fa-star"></i>
+                                                                <% rating--; %>
+                                                            <% } %>
+                                                            <% if (rating >= 0.75) { %>
+                                                                <i class="fa fa-star"></i>
+                                                                <% i++; %>
+                                                            <% } else if (rating >= 0.25) { %>
+                                                                <i class="fa fa-star-half-o"></i>
+                                                                <% i++; %>
+                                                            <% } %>
+                                                            <% for (i; i<5; i++) { %>
+                                                                <i class="fa fa-star-o"></i>
+                                                            <% } %>
+                                                            <span>(<%= numberOfRates %> opiniones)</span>
+                                                        </div>
+                                                    <%   } else { %>
+                                                        <span class="no-ratings">¡Sé el primero en valorarla!</span>
+                                                    <%   } %>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <!-- listing-item end-->
+                                <% }); %>
+                            </div>
+                            <% /* TODO hacer el load more y el buscar aquí en el mapa
+                            <a class="load-more-button" onclick="javascript:loadMore()">Cargar más <i class="fa fa-refresh"></i> </a>
+                           */ %>
+                        </div>
+                        <!-- list-main-wrap end-->
+                    </div>
+                    <!--col-list-wrap -->  
+                    <div class="limit-box fl-wrap"></div>
+                </div>
+                <!--content end -->   
+            </div>
+            <!-- wrapper end -->
+
+            <!-- footer -->
+            <% include commons/footer.ejs %>
+        </div>
+        <!-- Main end -->
+
+        <div class="floating-buttons">
+            <button id="showFiltersButton" type="button" class="btn btn-primary">
+                <i class="fa fa-search"></i>
+            </button>
+            <span class="separator"></span>
+            <button id="toggleMapOrListButton" type="button" class="btn btn-primary">
+                Ver en lista <i class="fa fa-list"></i>
+            </button>
+        </div>
+
+        <!--=============== scripts  ===============-->
+        <% include commons/body-global.ejs %>
+
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHWF4S03V4kODAXed5C81Ka5j25u5Wu-4&libraries=places&callback=initAutocomplete"></script>
+        <script type="text/javascript" src="/public/directoryTheme/assets/js/map_infobox.js"></script>
+        <script type="text/javascript" src="/public/directoryTheme/assets/js/markerclusterer.js"></script>
+
+        <script type="text/javascript" src="/public/directoryTheme/assets/js/pages/veterinaries.js"></script>
+        <script type="text/javascript" src="/public/directoryTheme/assets/js/maps.js"></script>
+
+        <!-- Local Variables -->
+        <script type="text/javascript">
+            let VETERINARIES = <%- JSON.stringify(veterinaries) %>;
+            let LATITUDE = <%- latitude %>;
+            let LONGITUDE = <%- longitude %>;
+        </script>
+    </body>
+</html>

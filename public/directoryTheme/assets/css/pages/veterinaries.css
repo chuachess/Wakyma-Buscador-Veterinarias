@@ -1,0 +1,81 @@
+.listsearch-header h3 span {
+    text-transform: capitalize;
+}
+.card-listing .geodir-category-content h3 {
+    width: 85%;
+    width: calc(100% - 55px);
+}
+.card-listing .geodir-category-location a {
+    text-align: left;
+}
+.listing-item.list-layout .geodir-category-distance {
+    position: absolute;
+    right: 20px;
+}
+.listing-item.list-layout .geodir-category-description {
+    overflow: hidden;
+    position: relative;
+    padding-top: 18px;
+    line-height: 17px;
+    max-height: 52px;
+    text-align: justify;
+    margin-right: -1em;
+    padding-right: 1em;
+}
+/*
+.listing-item.list-layout .geodir-category-description:before {
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.block-with-text:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: white;
+}*/
+
+.listing-item.list-layout .geodir-category-img {
+    width: 36%;
+}
+.listing-item.list-layout .geodir-category-content  {
+    width: 64%;
+}
+.card-listing .listing-rating {
+    margin-top: 12px;
+}
+
+.card-listing .no-ratings {
+    margin-top: 12px;
+    float: left;
+    text-align: left;
+    color: #999;
+}
+.floating-buttons{
+    display: none;
+}
+
+@media screen and (max-width: 480px) {
+    .listing-item.list-layout .geodir-category-img {
+        width: 100%;
+    }
+    .listing-item.list-layout .geodir-category-content {
+        width: 100%;
+    }
+    .floating-buttons {
+        position: fixed;
+        display: block;
+        width: 100px;
+        left: calc(50% - 50px);
+        bottom: 30px;
+        z-index: 1000;
+    }
+    .gm-fullscreen-control {
+        display: none;
+    }
+}
+

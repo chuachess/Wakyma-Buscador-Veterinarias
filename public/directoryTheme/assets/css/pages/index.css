@@ -1,0 +1,40 @@
+.intro-item h3 {
+    font-size: 18px;
+}
+
+.main-search-input-item {
+    width: 100%;
+}
+
+.main-search-input {
+    width: 70% !important;
+    margin-left: 15%;
+}
+
+.main-search-input {
+    width: 70% !important;
+    margin-left: 15%;
+}
+
+input#autocomplete-input {
+    font-size: 15px;
+}
+
+.main-search-button {
+    font-size: 15px;
+}
+
+@media screen and ( max-width: 900px) {
+    .main-search-input {
+        width: 80% !important;
+        margin-left: 10%;
+    }
+}
+
+
+@media screen and ( max-width: 768px) {
+    .main-search-input {
+        width: 100% !important;
+        margin-left: 0%;
+    }
+}
